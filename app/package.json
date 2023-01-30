@@ -1,7 +1,7 @@
 {
   "name": "proyecto-fitsys",
   "version": "1.0.0",
-  "description": "Administrador de rutinas para entrenadores físicos",
+  "description": "Administrador de rutinas de entrenadores físicos para sus atletas",
   "main": "index.js",
   "private": false,
   "scripts": {
