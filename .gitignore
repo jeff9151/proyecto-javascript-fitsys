@@ -4,7 +4,7 @@
 
 # Node
 package.lock
-vendor/
+/vendor/
 
 # Logs
 logs
