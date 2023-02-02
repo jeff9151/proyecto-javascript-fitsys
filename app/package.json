@@ -2,7 +2,7 @@
   "name": "proyecto-fitsys",
   "version": "1.0.0",
   "description": "Administrador de rutinas de entrenadores físicos para sus atletas",
-  "main": "index.js",
+  "main": "main.js",
   "private": false,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
