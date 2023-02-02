@@ -9,6 +9,14 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+const pgp = require('pg-promise')(/* options */)
+
+// Database connection
+main().catch(err => console.log(err));
+async function main() {
+  const db = pgp('postgres://postgres:David88@127.0.0.1:5432/fitsys')
+}
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
