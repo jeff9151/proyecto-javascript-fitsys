@@ -1,3 +1,4 @@
+var cookieSession = require('cookie-session')
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -8,6 +9,17 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+app.use(cookieSession({
+  name: 'session',
+  keys: [
+    '4b1ddd643fea47e16092ebf093f63004',
+    '739134fed84a79ca4f9ed5eb1349cb76'
+  ],
+
+  // Cookie Options
+  maxAge: 1 * 60 * 60 * 1000 // 1 hour
+}))
 
 const pgp = require('pg-promise')(/* options */)
 
