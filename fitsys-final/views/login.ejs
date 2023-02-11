@@ -1,35 +1,44 @@
 <%- include('header', {title: 'Acceso al sistema' }); %>
-    <div id='layout_div' style='width:300px; height:300px; margin:20px auto; float:none; display:block;'></div>
+    <style>
+        div[view_id=form1] {
+            margin: 30px auto;
+            display: block;
+            float: none;
+            height: 300px !important;
+        }
+    </style>
     <script type="text/javascript" charset="utf-8">
 
+        var fields = [];
         webix.ready(function () {
+
             var form1 = [
                 { template: "Control de Acceso", type: "section" },
-                { view: "text", label: "Email", name: "email", id: "email" },
+                { view: "text", label: "Usuario", name: "usuario", id: "usuario" },
                 { view: "text", type: "password", label: "Password", name: "password", id: "password" },
                 {
                     margin: 5, cols: [
                         {
-                            view: "button", value: "Login", id: "login", css: "webix_primary", click: function () {
+                            view: "button", type: "submit", value: "Login", id: "login", css: "webix_primary", click: function (ev) {
                                 //this.getParentView().validate(); //form.validate()
                                 $$('form1').validate();
                             }
                         },
-                        { view: "button", value: "Cancel" }
+                        { view: "button", value: "Cancel", click: () => { window.location.href = "/" } }
                     ]
                 }
             ];
 
 
             webix.ui({
-                container: "layout_div",
+                // container: "layout_div",
                 id: "form1",
                 view: "form",
                 scroll: false,
                 width: 300,
                 elements: form1,
                 rules: {
-                    "email": webix.rules.isEmail,
+                    "usuario": webix.rules.isEmail,
                     "password": webix.rules.isNotEmpty
                 },
                 elementsConfig: {
@@ -40,48 +49,63 @@
                     onValidationError: function (key, obj) {
                         var text;
 
-                        if (key == "email")
-                            text = "El correo electrónico debe ser una dirección válida";
+                        if (key == "usuario")
+                            text = "El usuario debe ser una dirección de correo válida";
                         if (key == "password")
                             text = "Debe especificar una contraseña valida para ingresar";
 
                         webix.message({ type: "error", text: text });
+
                     },
-                    onValidationSuccess: function(key, obj) {
 
-                        //if (key == "login") {
-                            webix.ajax().post("/auth/validate", $$('form1').getValues(), function (text, data, xhr) {
-                                if (text == 'OK') {
-                                    
-                                    webix.message({
-                                        text: "Validación de acceso exitoso",
-                                        type: "success",
-                                        expire: 10000,
-                                        id: "messageSuccess"
-                                    });
-                                    setTimeout(()=> { window.location.href = '/manager'; },10000);
-                                }
-                                else {
-                                    webix.message({
-                                        text: "Usuario o Contraseña incorrectos",
-                                        type: "error",
-                                        expire: 10000,
-                                        id: "message1"
-                                    });
-                                    setTimeout(()=> { window.location.href = '/auth/login'; },10000);
-                                }
-                            });
-                        //}
+                    onValidationSuccess: function (key, obj) {
 
+                        fields.push(key);
+                        
+                        if (['usuario','password'].join(',') == fields.join(',')) {
+
+                            fields = []
+
+                            webix.ajax()
+                                .post("/auth/validate", obj)
+                                .then(
+                                    function (data) {
+
+                                        if (data.text() == 'OK') {
+
+                                            webix.message({
+                                                text: "Validación de acceso exitoso",
+                                                type: "success",
+                                                expire: 10000,
+                                                id: "messageSuccess"
+                                            });
+                                            setTimeout(() => { window.location.href = '/manager'; }, 10000);
+                                        }
+                                        else {
+                                            webix.message({
+                                                text: "Usuario o Contraseña incorrectos",
+                                                type: "error",
+                                                expire: 3000,
+                                                id: "messageError"
+                                            });
+                                            $$('form1').clear();
+                                        }
+                                    }
+                                )
+                                .catch(function (err) {
+                                    console.log(err)
+                                }); // End: Ajax
+                        }
                     }
 
                 }
-            });
+            }).show();
+
+
+
+
         });
 
-
-        /*
-        */
     </script>
 
     <%- include('footer'); %>
