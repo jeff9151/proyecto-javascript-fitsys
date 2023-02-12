@@ -4,6 +4,10 @@ body {
   background-color: #dddddd;
 }
 
+body.login {
+  background: url('/images/bg-login-sm.jpg') center center no-repeat;
+}
+
 a {
   color: #00B7FF;
 }

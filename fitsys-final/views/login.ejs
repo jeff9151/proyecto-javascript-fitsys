@@ -1,4 +1,4 @@
-<%- include('header', {title: 'Acceso al sistema' }); %>
+<%- include('header', {title: 'Acceso al sistema', 'bodyClass': 'login' }); %>
     <style>
         div[view_id=form1] {
             margin: 30px auto;
@@ -13,18 +13,18 @@
         webix.ready(function () {
 
             var form1 = [
-                { template: "Control de Acceso", type: "section" },
-                { view: "text", label: "Usuario", name: "usuario", id: "usuario" },
-                { view: "text", type: "password", label: "Password", name: "password", id: "password" },
+                { template: "Control de Acceso a Fitsys", type: "section" },
+                { view: "text", label: "Usuario", name: "usuario", id: "usuario", placeholder:"Ej: usuario@example.com" },
+                { view: "text", type: "password", label: "Contraseña", placeholder:"Digite su clave secreta", name: "password", id: "password" },
                 {
                     margin: 5, cols: [
                         {
-                            view: "button", type: "submit", value: "Login", id: "login", css: "webix_primary", click: function (ev) {
+                            view: "button", type: "submit", value: "Ingresar", id: "login", css: "webix_primary", hotkey: "enter", click: function (ev) {
                                 //this.getParentView().validate(); //form.validate()
                                 $$('form1').validate();
                             }
                         },
-                        { view: "button", value: "Cancel", click: () => { window.location.href = "/" } }
+                        { view: "button", value: "Volver", click: () => { window.location.href = "/" } }
                     ]
                 }
             ];
