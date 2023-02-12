@@ -1,11 +1,55 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<%- include('partials/index-header', {title: 'Bienvenido a Fitsys', 'bodyClass': 'home' }); %>
+      <!--Wrapper-->
+      <div class="wrapper">
+        <!--Hero section-->
+        <section class="hero">
+           <!--Header-->
+           <header class="header default">
+              <div class=" left-part">
+                 <a class="logo scroll" href="#hero">
+                    <h2>fit<span>sys</span></h2>
+                 </a>
+              </div>
+              <div class="right-part">
+                 <nav class="main-nav">
+                    <div class="toggle-mobile-but">
+                       <a href="#" class="mobile-but" >
+                          <div class="lines"></div>
+                       </a>
+                    </div>
+                    <ul>
+                       <li><a class="scroll" href="/">inicio</a></li>
+                       <li><a class="scroll" href="/auth/register">registro de nuevos usuarios</a></li>
+                       <li><a class="scroll" href="/auth/reset">recuperación de clave</a></li>
+                       <li><a class="but login scroll" href="/auth/login">login<i class="icon-lock"></i></a></li>
+                       <li><a class="scroll" href="/auth/logout">desconexión del sistema</a></li>
+                    </ul>
+                 </nav>
+              </div>
+           </header>
+           <!--End header-->
+           <!--Inner hero-->
+           <div class="inner-hero">
+              <!--Container-->
+              <div class="container hero-content">
+                 <!--Row-->
+                 <div class="row">
+                    <div class="col-sm-10 col-sm-offset-1 text-center">
+                       <div class="block-teaser">
+                          <h1>FITSYS</h1>
+                          <p class="lead">La forma más simple de ejecutar sus planes <br>de rutinas 
+                             diarias por medio de entrenadores expertos.
+                          </p>
+                          <a class="but medium mt-20" href="/auth/register">Registrarse</a>
+                       </div>
+                    </div>
+                 </div>
+                 <!--End row-->
+              </div>
+              <!--End container-->
+           </div>
+           <!--End inner hero-->
+        </section>
+        <!--End hero section-->
+
+<%- include('partials/index-footer'); %>
