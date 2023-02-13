@@ -78,7 +78,7 @@ webix.ready(function(){
         },
         { view: "label", label: "Fitsys Control Panel"},
         {},
-        { view: "label", label: "<%= req.session.usuario %>", align: "right", padding: 3},
+        { view: "label", label: "<%= req.session.usuario %> (Perfil <%= req.session.tipo > 1 ? 'Entrenador' : 'Usuario'; %>) ", align: "right", padding: 3},
         //{ view: "button", type: "icon", width: 45, css: "app_button", icon: "mdi mdi-comment",  badge:4},
         { view: "button", type: "icon", width: 45, css: "app_button", icon: "mdi mdi-bell",  badge:10}
       ]},
