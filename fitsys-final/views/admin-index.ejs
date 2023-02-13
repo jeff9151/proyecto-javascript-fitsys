@@ -1,0 +1,38 @@
+<%- include('partials/admin-header', {title: 'Módulo de administración', 'bodyClass': 'dashboard' }); %>
+    <script type="text/javascript" charset="utf-8">
+
+        var fields = [];
+        webix.ready(function () {
+
+            var form1 = [
+                { template: "Control de Acceso a Fitsys", type: "section" },
+                {
+                    margin: 5, cols: [
+                        {
+                            view: "button", value: "Página de Iniciio", id: "btn-dashboard", css: "webix_primary", hotkey: "enter", click: () => { window.location.href = "/" }
+                        }
+                    ]
+                }
+            ];
+
+
+            webix.ui({
+                // container: "layout_div",
+                id: "form1",
+                view: "form",
+                scroll: false,
+                width: 300,
+                elements: form1,
+                elementsConfig: {
+                    labelPosition: "top"
+                }
+            }).show();
+
+
+
+
+        });
+
+    </script>
+
+    <%- include('partials/admin-footer'); %>

@@ -11,6 +11,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
+var adminRouter = require('./routes/admin');
 
 var app = express();
 
@@ -26,15 +27,6 @@ app.use(cookieSession({
   // Expiración de la sesión
   maxAge: 0.5 * 60 * 60 * 1000 // 30 Minutes
 }));
-
-/*
-app.use('/manage', function (req, res, next) {
-  if(!app.session.auth){
-    res.redirect('/auth/login');
-  }
-  next();
-});
-*/
 
 // Envia la actualización a la sesión cada minuto en lugar de cada request
 app.use(function (req, res, next) {
@@ -52,6 +44,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/admin', adminRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);

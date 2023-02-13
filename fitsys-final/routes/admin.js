@@ -1,14 +1,12 @@
 var express = require('express')
 var router = express.Router()
-var bodyParser = require('body-parser')
-var userAuth = require('./../controllers/authentication')
-
-/* Parsing vars */
-router.use(bodyParser.urlencoded({ extended: false }))
 
 /* GET Autenticación */
-router.get('/login', function (req, res) {
-  res.render('login', { 'title': 'Acceso al sistema' })
+router.get('/', function (req, res) {
+  if(!req.session.auth){
+    res.redirect('/auth/login');
+  }
+  res.render('admin-index', { 'title': 'Módulo Administrativo' })
 })
 
 /* POST Validación Usuario/Contraseña */

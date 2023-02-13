@@ -76,10 +76,10 @@
                                             webix.message({
                                                 text: "Validación de acceso exitoso",
                                                 type: "success",
-                                                expire: 10000,
+                                                expire: 3000,
                                                 id: "messageSuccess"
                                             });
-                                            setTimeout(() => { window.location.href = '/manager'; }, 10000);
+                                            setTimeout(() => { window.location.href = '/admin'; }, 3000);
                                         }
                                         else {
                                             webix.message({
