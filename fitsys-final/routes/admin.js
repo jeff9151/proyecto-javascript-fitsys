@@ -6,7 +6,7 @@ router.get('/', function (req, res) {
   if(!req.session.auth){
     res.redirect('/auth/login');
   }
-  res.render('admin-index', { 'title': 'Módulo Administrativo' })
+  res.render('admin-index', { 'req': req, 'res': res, 'title': 'Módulo Administrativo' })
 })
 
 /* POST Validación Usuario/Contraseña */
