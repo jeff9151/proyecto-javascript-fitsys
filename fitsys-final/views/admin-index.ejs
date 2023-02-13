@@ -1,38 +1,99 @@
 <%- include('partials/admin-header', {title: 'Módulo de administración', 'bodyClass': 'dashboard' }); %>
-    <script type="text/javascript" charset="utf-8">
 
-        var fields = [];
-        webix.ready(function () {
+<link rel="stylesheet" href="//cdn.webix.com/materialdesignicons/5.8.95/css/materialdesignicons.min.css" type="text/css" charset="utf-8">
+  <style>
+    .app_button button{
+        padding:0;
+        text-align: center;
+    }
+    .fa-circle, .fa-circle-o{
+    	font-size:8px;
+    }
+  </style>
 
-            var form1 = [
-                { template: "Control de Acceso a Fitsys", type: "section" },
-                {
-                    margin: 5, cols: [
-                        {
-                            view: "button", value: "Página de Iniciio", id: "btn-dashboard", css: "webix_primary", hotkey: "enter", click: () => { window.location.href = "/" }
-                        }
-                    ]
-                }
-            ];
+<script> 
+
+var menu_data_multi  = [
+  { id: "structure", icon: "mdi mdi-view-column", value:"Structuring", data:[
+    { id: "layouts", icon:"mdi mdi-circle", value:"Layouts", data:[
+      { id: "layout", icon:"mdi mdi-circle-outline", value: "Layout"},
+      { id: "flexlayout", icon:"mdi mdi-circle-outline", value: "Flex Layout"},
+      { id:"strict", icon:"mdi mdi-circle-outline", value:"Precise Positioning", data:[
+        { id: "gridlayout", icon:"mdi mdi-circle-outline", value: "Grid Layout"},
+        { id: "dashboard",  icon:"mdi mdi-circle-outline", value: "Dashboard"},
+        { id: "abslayout", icon:"mdi mdi-circle-outline", value: "Abs Layout"}
+      ]},
+      { id: "datalayouts", icon:"mdi mdi-circle-outline", value:"Data Layouts",  data:[
+        { id: "datalayout", icon:"mdi mdi-circle-outline", value: "Data Layout"},
+        { id: "flexdatalayout",  icon:"mdi mdi-circle-outline", value: "Flex Data Layout"},
+      ]}
+    ]},
+    {id: "multiviews", icon:"mdi mdi-circle", value:"Multiviews", data:[
+      { id: "multiview", icon:"mdi mdi-circle-outline", value: "MultiView"},
+      { id: "tabview",  icon:"mdi mdi-circle-outline", value: "TabView"},
+      { id: "accordion",  icon:"mdi mdi-circle-outline", value: "Accordion"},
+      { id: "carousel", icon:"mdi mdi-circle-outline", value: "Carousel"}
+    ]}
+  ]},
+  {id: "tools", icon: "mdi mdi-calendar", value:"Tools", data:[
+    { id: "kanban", icon:"mdi mdi-circle", value: "Kanban Board"},
+    { id: "pivot", icon:"mdi mdi-circle", value: "Pivot Chart"},
+    { id: "scheduler", icon:"mdi mdi-circle", value: "Calendar"}
+  ]},
+  {id: "forms", icon: "mdi mdi-pencil", value:"Forms",  data:[
+    {id: "buttons", icon:"mdi mdi-circle", value: "Buttons", data:[
+      {id: "button", icon:"mdi mdi-circle-outline", value: "Buttons"},
+      {id: "segmented", icon:"mdi mdi-circle-outline", value: "Segmented"},
+      {id: "toggle", icon:"mdi mdi-circle-outline", value: "Toggle"},
+    ]},
+    { id:"texts", icon:"mdi mdi-circle", value:"Text Fields", data:[
+      { id: "text", icon:"mdi mdi-circle-outline", value: "Text"},
+      { id: "textarea", icon:"mdi mdi-circle-outline", value: "Textarea"},
+      { id: "richtext", icon:"mdi mdi-circle-outline", value: "RichText"}
+    ]},
+    { id:"selects", icon:"mdi mdi-circle", value:"Selectors", data:[
+      { id:"single", icon:"mdi mdi-circle-outline", value:"Single value", data:[
+        { id: "combo", icon:"mdi mdi-circle-outline", value: "Combo"},
+        { id: "richselect", icon:"mdi mdi-circle-outline", value: "RichSelect"},
+        { id: "select", icon:"mdi mdi-circle-outline", value: "Select"}
+      ]},
+      { id:"multi", icon:"mdi mdi-circle-outline", value:"Multiple values", data:[
+        { id: "multicombo", icon:"mdi mdi-circle-outline", value: "MultiCombo"},
+        { id: "multiselect", icon:"mdi mdi-circle-outline", value: "MultiSelect"}
+      ]}
+    ]}
+  ]},
+  {id: "demo", icon: "mdi mdi-book", value:"Documentation"}
+];
 
 
-            webix.ui({
-                // container: "layout_div",
-                id: "form1",
-                view: "form",
-                scroll: false,
-                width: 300,
-                elements: form1,
-                elementsConfig: {
-                    labelPosition: "top"
-                }
-            }).show();
+webix.ready(function(){
+  webix.ui({
+    rows: [
+      { view: "toolbar", css:"webix_dark", padding:3, elements: [
+        {view: "button", type: "icon", icon: "mdi mdi-menu", width: 37, align: "left", css: "app_button", 
+         click: function(){
+           $$("$sidebar1").toggle();
+         }
+        },
+        { view: "label", label: "My App"},
+        {},
+        { view: "button", type: "icon", width: 45, css: "app_button", icon: "mdi mdi-comment",  badge:4},
+        { view: "button", type: "icon", width: 45, css: "app_button", icon: "mdi mdi-bell",  badge:10}
+      ]},
+      { cols:[
+        { view: "sidebar", css:"webix_dark", width:300, data: menu_data_multi, on:{
+          onAfterSelect: function(id){
+            webix.message("Selected: "+this.getItem(id).value);
+          }
+        }},
+        { template: " " }
+      ]}
+    ]
+  });
+});
 
 
+</script>
 
-
-        });
-
-    </script>
-
-    <%- include('partials/admin-footer'); %>
+<%- include('partials/admin-footer'); %>
