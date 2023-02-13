@@ -17,6 +17,15 @@ var app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
+/*
+app.use(session({
+  resave: false, // don't save session if unmodified
+  saveUninitialized: false, // don't create session until something stored
+  secret: 'c38kej3884lwjldjfjlad'
+}));
+*/
+
+
 app.use(cookieSession({
   name: 'session',
   keys: new Keygrip([
@@ -27,6 +36,20 @@ app.use(cookieSession({
   // Expiración de la sesión
   maxAge: 0.5 * 60 * 60 * 1000 // 30 Minutes
 }));
+
+/*
+// Session-persisted message middleware
+app.use(function(req, res, next){
+  var err = req.session.error;
+  var msg = req.session.success;
+  delete req.session.error;
+  delete req.session.success;
+  res.locals.message = '';
+  if (err) res.locals.message = '<p class="msg error">' + err + '</p>';
+  if (msg) res.locals.message = '<p class="msg success">' + msg + '</p>';
+  next();
+});
+*/
 
 // Envia la actualización a la sesión cada minuto en lugar de cada request
 app.use(function (req, res, next) {
