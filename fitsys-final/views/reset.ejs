@@ -1,0 +1,109 @@
+<%- include('header', {title: 'Acceso al sistema', 'bodyClass': 'login' }); %>
+    <style>
+        div[view_id=form1] {
+            margin: 30px auto;
+            display: block;
+            float: none;
+            height: 300px !important;
+        }
+    </style>
+    <script type="text/javascript" charset="utf-8">
+
+        var fields = [];
+        webix.ready(function () {
+
+            var form1 = [
+                { template: "Recuperar Contraseña", type: "section" },
+                { view: "text", label: "Usuario", name: "usuario", id: "usuario", placeholder:"Ej: usuario@example.com" },
+                {
+                    margin: 5, cols: [
+                        {
+                            view: "button", type: "submit", value: "Recuperar", id: "login", css: "webix_primary", hotkey: "enter", click: function (ev) {
+                                //this.getParentView().validate(); //form.validate()
+                                $$('form1').validate();
+                            }
+                        },
+                        { view: "button", value: "Volver", click: () => { window.location.href = "/" } }
+                    ]
+                }
+            ];
+
+
+            webix.ui({
+                // container: "layout_div",
+                id: "form1",
+                view: "form",
+                scroll: false,
+                width: 300,
+                elements: form1,
+                rules: {
+                    "usuario": webix.rules.isEmail,
+                },
+                elementsConfig: {
+                    labelPosition: "top"
+                },
+                on: {
+
+                    onValidationError: function (key, obj) {
+                        var text;
+
+                        if (key == "usuario")
+                            text = "El usuario debe ser una dirección de correo válida";
+                        if (key == "password")
+                            text = "Debe especificar una contraseña valida para ingresar";
+
+                        webix.message({ type: "error", text: text });
+
+                    },
+
+                    onValidationSuccess: function (key, obj) {
+
+                        fields.push(key);
+                        
+                        if (['usuario','password'].join(',') == fields.join(',')) {
+
+                            fields = []
+
+                            webix.ajax()
+                                .post("/auth/validate", obj)
+                                .then(
+                                    function (data) {
+
+                                        if (data.text() == 'OK') {
+
+                                            webix.message({
+                                                text: "Validación de acceso exitoso",
+                                                type: "success",
+                                                expire: 3000,
+                                                id: "messageSuccess"
+                                            });
+                                            setTimeout(() => { window.location.href = '/admin'; }, 3000);
+                                        }
+                                        else {
+                                            webix.message({
+                                                text: "Usuario o Contraseña incorrectos",
+                                                type: "error",
+                                                expire: 3000,
+                                                id: "messageError"
+                                            });
+                                            $$('form1').clear();
+                                        }
+                                    }
+                                )
+                                .catch(function (err) {
+                                    console.log(err)
+                                }); // End: Ajax
+                        }
+                    }
+
+                }
+            }).show();
+
+
+
+
+        });
+
+    </script>
+
+    <%- include('footer'); %>

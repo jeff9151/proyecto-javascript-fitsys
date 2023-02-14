@@ -19,10 +19,19 @@
                     </div>
                     <ul>
                        <li><a class="scroll" href="/">inicio</a></li>
-                       <li><a class="scroll" href="/auth/register">registro</a></li>
-                       <li><a class="scroll" href="/auth/reset">olvidé contraseña</a></li>
-                       <li><a class="scroll" href="/auth/logout">desconectarse</a></li>
-                       <li><a class="but login scroll" href="/auth/login">Conectarse<i class="icon-lock"></i></a></li>
+                        <% if (!req.session.auth) { %>
+                           <li><a class="scroll" href="/auth/register">registro</a></li>
+                           <li><a class="scroll" href="/auth/reset">recuperar contraseña</a></li>
+                           <li><a class="but login scroll" href="/auth/login">
+                              Conectarse<i class="icon-lock">
+                           </i></a></li>
+                        <% } else { %>
+                           <li><a class="but login scroll" href="/auth/logout">
+                              Desconectarse<i class="icon-back">
+                           </i></a></li>
+                        <% } %>
+
+
                     </ul>
                  </nav>
               </div>
