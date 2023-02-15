@@ -1,7 +1,7 @@
 
 module.exports = {
   mailService: 'gmail',
-  email: 'dmadrigalmiller@gmail.com',
-  host: 'localhost',
-  from: 'Fitsys <entrenador@fitsys.com',
+  user: 'proyecto.fitsys@gmail.com',
+  pass: "CostaRica88!!",
+  from: 'Proyecto Fitsys <proyecto.fitsys@gmail.com>'
 }

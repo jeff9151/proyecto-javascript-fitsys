@@ -1,25 +1,31 @@
 var nodemailer = require('nodemailer');
-var mailConfig = require('./../config/mail.js');
+var mailConfig = require('./../config/mail-params.js');
 
-var transporter = nodemailer.createTransport({
-  service: mailConfig.mailService,
-  auth: {
-    user: mailConfig.email,
-    pass: mailConfig.password
-  }
-});
+module.exports = (mailTo, mailSubject, bodyText) => {
 
-var mailOptions = {
-  from: mailConfig.from,
-  to: 'myfriend@yahoo.com',
-  subject: 'Sending Email using Node.js',
-  text: 'That was easy!'
-};
+    var transporter = nodemailer.createTransport({
+    service: mailConfig.mailService,
+    auth: {
+        user: mailConfig.email,
+        pass: mailConfig.password
+    }
+    });
 
-transporter.sendMail(mailOptions, function(error, info){
-  if (error) {
-    console.log(error);
-  } else {
-    console.log('Email sent: ' + info.response);
-  }
-});
+    var mailOptions = {
+        from: mailConfig.from,
+        to: mailTo,
+        subject: mailSubject,
+        text: bodyText
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+    
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+
+    });
+
+}
