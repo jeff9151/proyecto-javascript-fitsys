@@ -40,19 +40,16 @@ module.exports = (req, res, user, pass) => {
     
           else if (resu.rows.length > 0) {
     
-            console.log('DMM Authentication')
-            console.log(resu);
-
             // Creando una nueva sesión
             req.session.usuario = req.body.usuario
             req.session.auth = true
             req.session.tipo = resu.rows[0][0]
-    
-            // Sending response
-            res.send('OK')
-    
+
             // Close connection
             client.release()
+    
+            // Sending response
+            res.send('OK')    
     
           }
     

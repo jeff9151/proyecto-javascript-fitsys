@@ -1,3 +1,4 @@
+
 var express = require('express')
 var router = express.Router()
 var bodyParser = require('body-parser')
@@ -6,9 +7,16 @@ var userAuth = require('./../controllers/authentication')
 /* Parsing vars */
 router.use(bodyParser.urlencoded({ extended: false }))
 
+/* Limpia el registro de la sesión actual si alguna ruta es accesada 
+router.use(function(req, res, next){
+  req.session = null
+  next()
+});
+*/
+
 /* GET Confirmación de correo de usuario */
 router.get('/confirmation', function (req, res) {
-  res.render('confirmation', { 'title': 'Confirmación de Correo electrónico' })
+  res.render('confirmation', { 'title': 'Confirmación de Correo electrónico', 'verificationCode': '2034' })
 })
 
 /* GET Registro de usuarios en línea */
@@ -28,7 +36,6 @@ router.get('/login', function (req, res) {
 
 /* GET Logout */
 router.get('/logout', function (req, res) {
-  req.session = null
   res.redirect('/')
 })
 
@@ -36,6 +43,5 @@ router.get('/logout', function (req, res) {
 router.post('/validate', function (req, res) {
   userAuthentication = userAuth(req, res, req.body.usuario, req.body.password)
 }) // END ROUTER
-
 
 module.exports = router;

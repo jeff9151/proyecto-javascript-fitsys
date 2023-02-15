@@ -1,20 +1,19 @@
 <%- include('partials/admin-header', {title: 'Módulo de administración', 'bodyClass': 'dashboard' }); %>
 
-<link rel="stylesheet" href="//cdn.webix.com/materialdesignicons/5.8.95/css/materialdesignicons.min.css" type="text/css" charset="utf-8">
-  <style>
-    .app_button button{
-        padding:0;
-        text-align: center;
-    }
-    .fa-circle, .fa-circle-o{
-    	font-size:8px;
-    }
-  </style>
+<style>
+  .app_button button{
+      padding:0;
+      text-align: center;
+  }
+  .fa-circle, .fa-circle-o{
+    font-size:8px;
+  }
+</style>
 
 <script> 
 
 var menu_data_multi  = [
-  { id: "structure", icon: "mdi mdi-view-column", value:"Structuring", data:[
+  { id: "structure", icon: "mdi mdi-view-column", value:"Buscador general", data:[
     { id: "layouts", icon:"mdi mdi-circle", value:"Layouts", data:[
       { id: "layout", icon:"mdi mdi-circle-outline", value: "Layout"},
       { id: "flexlayout", icon:"mdi mdi-circle-outline", value: "Flex Layout"},

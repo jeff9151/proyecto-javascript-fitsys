@@ -1,4 +1,4 @@
-<%- include('header', {title: 'Acceso al sistema', 'bodyClass': 'login' }); %>
+<%- include('header', {title: 'Acceso al sistema' , 'bodyClass' : 'login' }); %>
     <style>
         div[view_id=form1] {
             margin: 30px auto;
@@ -13,19 +13,19 @@
         webix.ready(function () {
 
             var form1 = [
-                { template: "Confirmación de Email", type: "section" },
-                { view: "text", type: "password", label: "Código recibido", placeholder:"Conjunto alfanumérico de 4 caracteres", name: "password", id: "password" },
+                { template: "Confirmación de Email", type: "section", textAlign: "center" },
+                { view: "text", type: "text", label: "Código recibido", maxlenght: 4, placeholder: "Conjunto alfanumérico de 4 caracteres", name: "code", id: "code" },
                 {
                     margin: 5, cols: [
                         {
                             view: "button", type: "submit", value: "Verificar", id: "login", css: "webix_primary", hotkey: "enter", click: function (ev) {
-                                //this.getParentView().validate(); //form.validate()
                                 $$('form1').validate();
                             }
                         },
                         { view: "button", value: "Reenviar", click: () => { window.location.href = "/auth/confirmation" } }
                     ]
-                }
+                },
+                { template: "<h3>Instrucciones</h3>" }
             ];
 
 
@@ -36,72 +36,45 @@
                 scroll: false,
                 width: 300,
                 elements: form1,
-                rules: {
-                    "usuario": webix.rules.isEmail,
-                    "password": webix.rules.isNotEmpty
-                },
                 elementsConfig: {
                     labelPosition: "top"
                 },
                 on: {
 
                     onValidationError: function (key, obj) {
-                        var text;
+                        var textMSG;
 
-                        if (key == "usuario")
-                            text = "El usuario debe ser una dirección de correo válida";
-                        if (key == "password")
-                            text = "Debe especificar una contraseña valida para ingresar";
+                        if (key == "code")
+                            textMSG = "El código ingresado no es válido";
 
-                        webix.message({ type: "error", text: text });
+                        webix.message({
+                            text: textMSG,
+                            type: "error",
+                            expire: 3000,
+                            id: "messageError"
+                        });
+
+                        $$('form1').clear();
 
                     },
 
                     onValidationSuccess: function (key, obj) {
 
-                        fields.push(key);
-                        
-                        if (['usuario','password'].join(',') == fields.join(',')) {
+                        if (key == "code") {
 
-                            fields = []
-
-                            webix.ajax()
-                                .post("/auth/validate", obj)
-                                .then(
-                                    function (data) {
-
-                                        if (data.text() == 'OK') {
-
-                                            webix.message({
-                                                text: "Validación de acceso exitoso",
-                                                type: "success",
-                                                expire: 3000,
-                                                id: "messageSuccess"
-                                            });
-                                            setTimeout(() => { window.location.href = '/admin'; }, 3000);
-                                        }
-                                        else {
-                                            webix.message({
-                                                text: "Usuario o Contraseña incorrectos",
-                                                type: "error",
-                                                expire: 3000,
-                                                id: "messageError"
-                                            });
-                                            $$('form1').clear();
-                                        }
-                                    }
-                                )
-                                .catch(function (err) {
-                                    console.log(err)
-                                }); // End: Ajax
+                            webix.message({
+                                text: "Validación de Email Satisfactoria",
+                                type: "success",
+                                expire: 3000,
+                                id: "messageSuccess"
+                            });
+                            setTimeout(() => { window.location.href = '/admin'; }, 3000);
                         }
+
                     }
-
                 }
+
             }).show();
-
-
-
 
         });
 
