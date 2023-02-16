@@ -12,7 +12,17 @@ router.use((err, req, res, next) => {
 
 /* GET Autenticación */
 router.get('/', function (req, res) {
-  res.render('admin-index', { 'req': req, 'res': res, 'title': 'Módulo Administrativo' })
+  res.render('layouts/admin', { 'req': req, 'res': res, 'title': 'Módulo Administrativo', 'contentPath': '../admin/index' })
+})
+
+/* GET Admin Users */
+router.get('/user/list', function (req, res) {
+  res.render('layouts/admin', { 'req': req, 'res': res, 'title': 'Administración de usuarios', 'contentPath': '../admin/user/list' })
+})
+
+/* GET Admin Users */
+router.get('/user/add', function (req, res) {
+  res.render('layouts/admin', { 'req': req, 'res': res, 'title': 'Agregando nuevo usuario', 'contentPath': '../admin/user/add' })
 })
 
 /* POST Validación Usuario/Contraseña */
