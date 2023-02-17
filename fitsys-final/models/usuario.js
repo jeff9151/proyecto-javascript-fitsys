@@ -32,11 +32,12 @@ module.exports = class Usuario {
 
     new(data) {
 
-        var keys = data.keys.join(',');
+        var keys = data.keys().join(',');
         const query = {
-            text: "INSERT INTO user SET ($1::text) VALUES (" + data.forEach((val,idx) => '$'+ (idx+2) + ((idx+1) == data.length ? '::text' : '::text,') + ')'),
-            values: [keys].concat(data),
-            rowMode: 'array'
+            text: `INSERT INTO user SET (${keys}) VALUES (` + 
+            data.forEach((val,idx) => { return (idx == 'clave' ? val : '$'+ idx) }).join(',') +');',
+            values: data
+            //,rowMode: 'array' -> Object es por defecto
         }
 
         // if (err) throw err
