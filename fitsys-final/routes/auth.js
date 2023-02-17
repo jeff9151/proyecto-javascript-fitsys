@@ -36,6 +36,7 @@ router.get('/login', function (req, res) {
 
 /* GET Logout */
 router.get('/logout', function (req, res) {
+  req.session = null
   res.redirect('/')
 })
 
