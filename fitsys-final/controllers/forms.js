@@ -1,11 +1,12 @@
 var user = require('./../forms/usuario.js')
 
-module.export = function (req, res) {
+module.export = function (formID, data) {
 
-    switch (req.body.form_id) {
+    switch (formID) {
         case 'user.new':
-            var userNew = require('../forms/usuario/new')
-            return userNew();
+            const {Usuario} = require('./../forms/usuario/new')
+            var user = new Usuario()
+            return user.new(data);
             break;
         case 'user.edit':
             var userEdit = require('../forms/usuario/edit')
