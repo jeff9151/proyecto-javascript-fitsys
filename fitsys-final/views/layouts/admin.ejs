@@ -108,15 +108,15 @@
                             },
                             {
                                 view: "template",
-                                template: `<%- include(contentPath) %>`,
+                                content: "htmlInclude",
                             },
                         ]
                     }
                 ]
             });
         });
-
-
     </script>
+
+    <%- include(contentPath) %>
 
     <%- include('../partials/admin-footer'); %>

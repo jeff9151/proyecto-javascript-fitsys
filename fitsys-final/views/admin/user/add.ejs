@@ -1,2 +1,38 @@
-<h1>Administración de Usuarios</h1><hr>
-<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis, magni odit! Excepturi vel repellat distinctio voluptates, facere expedita beatae? Eos quidem fugit impedit, expedita omnis rerum veniam nobis ut non.</p>
+<div id="htmlInclude"></div>
+
+<script>
+    var form1 = [
+        { type:"section", template:"Nuevo Usuario"},
+        { view: "switch", label: 'Status', onLabel: "Activo", offLabel:"Inactivo", name: "status", value: 1 },
+        { view: "text", required: true, label: 'Nombre', name: "nombre", placeholder: "Ej. Juan José"},
+        { view: "text", required: true, label: 'Apellidos', name: "apellidos", placeholder: "Ej. Solano Herrera"},
+        { view: "text", required: true, type: 'email', label: 'Usuario', name: "usuario", placeholder: "Ej. john@doe.com" },
+        { view: "text", required: true, type: 'password', label: 'Password', name: "password", placeholder: "Digite una contraseña compleja por seguridad" },
+        // { view: "radio", label: 'Tipo', name: "tipo", value: 1 },
+        {
+            view: "button",
+            css: "webix_primary",
+            value: "Submit",
+            click: function () {
+                this.getParentView().validate(); //form.validate()
+            }
+        }
+    ];
+
+    webix.ui({
+        padding: 20,
+        view: "form",
+        container: "htmlInclude",
+        scroll: false,
+        width: 400,
+        elements: form1,
+        rules: {
+            $all:webix.rules.isNotEmpty,
+            "usuario": webix.rules.isEmail,
+            "clave": function (value) { return value.length > 6 && value.length < 12; }
+        },
+        elementsConfig: {
+            labelPosition: "top"
+        }
+    });	
+</script>
