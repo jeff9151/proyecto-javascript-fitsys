@@ -2,13 +2,23 @@
 
 <script>
     var form1 = [
-        { type:"section", template:"Nuevo Usuario"},
-        { view: "switch", label: 'Status', onLabel: "Activo", offLabel:"Inactivo", name: "status", value: 1 },
-        { view: "text", required: true, label: 'Nombre', name: "nombre", placeholder: "Ej. Juan José"},
-        { view: "text", required: true, label: 'Apellidos', name: "apellidos", placeholder: "Ej. Solano Herrera"},
+        { type: "section", template: "Nuevo Usuario" },
+        { view: "switch", label: 'Status', onLabel: "Activo", offLabel: "Inactivo", name: "status", value: 1 },
+        { view: "text", required: true, label: 'Nombre', name: "nombre", placeholder: "Ej. Juan José" },
+        { view: "text", required: true, label: 'Apellidos', name: "apellidos", placeholder: "Ej. Solano Herrera" },
         { view: "text", required: true, type: 'email', label: 'Usuario', name: "usuario", placeholder: "Ej. john@doe.com" },
         { view: "text", required: true, type: 'password', label: 'Password', name: "password", placeholder: "Digite una contraseña compleja por seguridad" },
-        // { view: "radio", label: 'Tipo', name: "tipo", value: 1 },
+        {
+            view: "radio",
+            label: "Tipo",
+            labelPosition: "top",
+            options: [
+                { id: "1", value: "Usuario normal" },
+                { id: "2", value: "Entrenador" },
+                //{ id: "3", value: "Super Usuario" }
+            ],
+            value: "1"
+        },
         {
             view: "button",
             css: "webix_primary",
@@ -27,7 +37,7 @@
         width: 400,
         elements: form1,
         rules: {
-            $all:webix.rules.isNotEmpty,
+            $all: webix.rules.isNotEmpty,
             "usuario": webix.rules.isEmail,
             "clave": function (value) { return value.length > 6 && value.length < 12; }
         },
