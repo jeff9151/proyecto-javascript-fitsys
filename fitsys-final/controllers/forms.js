@@ -1,18 +1,18 @@
-var user = require('./../forms/usuario.js')
+var {Usuario} = require('./../forms/usuario.js')
 
 module.export = function (formID, data) {
 
     switch (formID) {
-        case 'user.new':
-            const {Usuario} = require('./../forms/usuario/new')
+        case 'usuario.nuevo':
+            const {Usuario} = require('../forms/usuario/nuevo')
             var user = new Usuario()
-            return user.new(data);
+            return user.nuevo(data);
             break;
-        case 'user.edit':
-            var userEdit = require('../forms/usuario/edit')
+        case 'usuario.editar':
+            var userEdit = require('../forms/usuario/editar')
             res.send(userEdit());
             break;
-        case 'user.del':
+        case 'usuario.eliminar':
             var userDel = require('../forms/usuario/del')
             res.send(userDel());
         default:

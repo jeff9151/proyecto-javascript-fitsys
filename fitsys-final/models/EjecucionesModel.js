@@ -1,4 +1,4 @@
-module.exports = class Usuario {
+module.exports = class UsuarioModel {
 
     pgConfig
     pool
@@ -6,11 +6,12 @@ module.exports = class Usuario {
     client
     done
 
-    constructor() {
+    constructor(data) {
 
         const { Pool } = require('pg')
-        this.pgConfig = require('./../config/pg-params')
+        this.pgConfig = require('../config/pg-params')
         this.pool = new Pool(pgConfig)
+        this.info = data
 
         this.pool.on('error', (err, client) => {
             console.error('Unexpected error on idle client', err)
@@ -30,13 +31,13 @@ module.exports = class Usuario {
         })
     }
 
-    new(data) {
+    nuevo() {
 
-        var keys = data.keys().join(',');
+        var keys = this.info.keys().join(',');
         const query = {
             text: `INSERT INTO user SET (${keys}) VALUES (` + 
-            data.forEach((val,idx) => { return (idx == 'clave' ? val : '$'+ idx) }).join(',') +');',
-            values: data
+            this.info.forEach((val,idx) => { return (idx == 'clave' ? val : '$'+ idx) }).join(',') +');',
+            values: this.info
             //,rowMode: 'array' -> Object es por defecto
         }
 
@@ -73,7 +74,7 @@ module.exports = class Usuario {
 
         }) // END client.query
 
-    } // END NEW
+    } // END nuevo
 
 }
 
