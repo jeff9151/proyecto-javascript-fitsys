@@ -1,3 +1,4 @@
+format = require('pg-format');
 import { Usuario } from './../../models/usuario';
 const user = new Usuario();
 
@@ -10,7 +11,7 @@ module.exports = (data) => {
     info['nombre'] = data.nombre
     info['apellidos'] = data.apellidos
     info['email_usuario'] = data.Usuario
-    info['clave'] = data.clave
+    info['clave'] = 'crypt(' + format('%s',data.clave) + ', gen_salt("bf"))'
     info['tipo'] = data.tipo
 
     // Almacenando datos en la BD
